@@ -30,7 +30,7 @@ namespace FinancialTradingPlatformApplication
             //Call methods asynchronously
             
             List<Task<decimal[]>> tasks = new List<Task<decimal[]>>();
-            
+            //这里不就是 我之前说的cpu异步操作 吗
             Task<decimal[]> getOpeningPricesTask = Task.Run(() => stockMarketTechnicalAnalysisData.GetOpeningPrices());
             Task<decimal[]> getClosingPricesTask = Task.Run(() => stockMarketTechnicalAnalysisData.GetClosingPrices());
             Task<decimal[]> getPriceHighsTask = Task.Run(() => stockMarketTechnicalAnalysisData.GetPriceHighs());
@@ -64,7 +64,7 @@ namespace FinancialTradingPlatformApplication
             decimal[] data9 = tasks[8].Result;
 
             DateTime dateTimeAfter = DateTime.Now;
-
+        //时间跨度就是差减
             TimeSpan timeSpan = dateTimeAfter.Subtract(dateTimeBefore);
 
             Console.WriteLine($"Total time for operations to complete took {timeSpan.Seconds} {(timeSpan.Seconds > 1?"seconds":"second")}");
@@ -77,6 +77,7 @@ namespace FinancialTradingPlatformApplication
         {
             //Code goes here to add data to the chart
             Console.WriteLine("Data is displayed on the chart.");
+            //这里放了九个表盘的数据  因为是示例具体的逻辑就没有写了
         }
 
     }
@@ -85,20 +86,20 @@ namespace FinancialTradingPlatformApplication
     {
         public StockMarketTechnicalAnalysisData(string stockSymbol,DateTime dateTimeStart, DateTime dateTimeEnd)
         { 
-            //Code here gets stock market data from remote server
+            //Code here gets stock market data from remote server    //构造器 用来获得股票数据的
         }
 
-        public decimal[] GetOpeningPrices()
+        public decimal[] GetOpeningPrices() //存储股票开盘价数据。
         {
             decimal[] data;
 
             Console.WriteLine($"Method name: {nameof(GetOpeningPrices)}, ThreadId: {Thread.CurrentThread.ManagedThreadId} ");
 
-            Thread.Sleep(1000); //Represents the time it takes for the operation to complete
+            Thread.Sleep(1000); //Represents the time it takes for the operation to complete  用来模拟获得数据所耗费的时间
 
             data = new decimal[] { }; //In the real world the 'data' variable would contain decimal data
 
-            return data;
+            return data;  //再将数据返回给调用方
 
         }
         public decimal[] GetClosingPrices()
